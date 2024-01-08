@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: tekton-e2e-testing-taskrun
+  namespace: dev
+  annotations:
+    tekton.dev/pipelines.minVersion: "0.12.1"
+    tekton.dev/categories: Security
+    tekton.dev/tags: security
+    tekton.dev/displayName: "e2e testing"
+    tekton.dev/platforms: "linux/amd64"
+spec:
+  steps:
+    - name: e2e-testing
+      image:  registry.harbor.learn.tapsme.org/library/alpine-curl-jq@sha256:770e91cabcaa0cb66fa0f3627b1593b3b9f8f416fba893f473040e0071219272
+      script: |
+        #!/usr/bin/env bash
+
+        result="$(curl -I -s https://www.google.com | head -n 1|cut -d$' ' -f2)"
+        echo $result
+        if [[ ${result} == "200" ]]; then
+          echo "e2e-testing::PASSED"
+        else
+          echo "e2e-testing::FAILED"
+          exit 1
+        fi

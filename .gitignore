@@ -1,0 +1,11 @@
+.idea/
+/not-safe/
+/.catalog/
+/setup-repo.sh
+tanzu-gitops-ri*.tgz
+*ignoreme
+configurationslice.yaml
+configurationsource.yaml
+tekton-java-17.yaml
+resourceclaim.yaml
+/.vscode
